@@ -7,7 +7,7 @@ export function useApi(config) {
     (config && config.baseURL) ||
     (process.env.NODE_ENV === "development"
       ? `http://localhost:8181`
-      : `https://siap.prakom.devnesia.org/api`);
+      : `https://siap.prakom.devnesia.org`);
 
   const token = localStorage.getItem("token");
 

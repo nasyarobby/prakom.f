@@ -7,13 +7,13 @@ export default function useGetAntrian() {
     error,
     loading,
     getAntrian: (token) => {
-      return send("/antrian?token=" + token);
+      return send("/api/antrian?token=" + token);
     },
     getAntrianUpcoming: () => {
-      return send("/antrian/upcoming");
+      return send("/api/antrian/upcoming");
     },
     getAntrianPast: () => {
-      return send("/antrian/past");
+      return send("/api/antrian/past");
     },
   };
 }

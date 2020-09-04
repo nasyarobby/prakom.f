@@ -7,7 +7,7 @@ export function useGetAssessment() {
     error,
     loading,
     get: (nik, date) => {
-      return send("/assessment/" + nik, {
+      return send("/api/assessment/" + nik, {
         params: {
           date,
         },
@@ -23,7 +23,7 @@ export function usePostAssessment() {
     error,
     loading,
     post: (nik, data, hasil) => {
-      return send("/assessment", { nik, data, hasil });
+      return send("/api/assessment", { nik, data, hasil });
     },
   };
 }

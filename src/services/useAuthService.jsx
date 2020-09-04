@@ -7,7 +7,7 @@ export default function useAuthService() {
     error,
     loading,
     login: (username, password) => {
-      return send("/login", { npwp: username, password });
+      return send("/api/login", { npwp: username, password });
     },
   };
 }

@@ -7,7 +7,7 @@ export default function useKppService() {
     error,
     loading,
     getKpp: (kode) => {
-      return send("/kpp/" + kode);
+      return send("/api/kpp/" + kode);
     },
   };
 }

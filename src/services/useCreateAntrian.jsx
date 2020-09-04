@@ -19,7 +19,7 @@ function useCreateAntrian(props) {
       layananId,
       detilLayanan
     ) => {
-      return send("/antrian", {
+      return send("/api/antrian", {
         namaWp,
         npwp,
         nik,

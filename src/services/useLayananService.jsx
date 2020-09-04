@@ -7,7 +7,7 @@ export default function useLayananService() {
     error,
     loading,
     getLayanan: () => {
-      return send("/layanan");
+      return send("/api/layanan");
     },
   };
 }
