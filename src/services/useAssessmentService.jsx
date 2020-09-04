@@ -1,10 +1,7 @@
 import { useHttpGet, useHttpPost } from "./useAxios";
-export const antrianConfig = {
-  baseURL: "http://localhost:8181",
-};
 
 export function useGetAssessment() {
-  const { data, error, loading, send } = useHttpGet(antrianConfig);
+  const { data, error, loading, send } = useHttpGet();
   return {
     data,
     error,
@@ -20,7 +17,7 @@ export function useGetAssessment() {
 }
 
 export function usePostAssessment() {
-  const { data, error, loading, send } = useHttpPost(antrianConfig);
+  const { data, error, loading, send } = useHttpPost();
   return {
     data,
     error,

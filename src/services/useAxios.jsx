@@ -6,8 +6,8 @@ export function useApi(config) {
   const baseURL =
     (config && config.baseURL) ||
     (process.env.NODE_ENV === "development"
-      ? `${process.env.REACT_APP_DEV_API_PROTOCOL}://${process.env.REACT_APP_DEV_API_HOST}`
-      : `${process.env.REACT_APP_API_PROTOCOL}://${process.env.REACT_APP_API_HOST}`);
+      ? `http://localhost:8181`
+      : `https://siap.prakom.devnesia.org/api`);
 
   const token = localStorage.getItem("token");
 

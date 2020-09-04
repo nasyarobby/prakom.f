@@ -1,8 +1,7 @@
 import { useHttpGet } from "./useAxios";
-import { antrianConfig } from "./useAssessmentService";
 
 export default function useGetAntrian() {
-  const { data, error, loading, send } = useHttpGet(antrianConfig);
+  const { data, error, loading, send } = useHttpGet();
   return {
     data,
     error,

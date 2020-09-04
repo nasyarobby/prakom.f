@@ -1,8 +1,7 @@
-import { antrianConfig } from "./useAssessmentService";
 import { useHttpPost } from "./useAxios";
 
 function useCreateAntrian(props) {
-  const { data, error, loading, send } = useHttpPost(antrianConfig);
+  const { data, error, loading, send } = useHttpPost();
   return {
     data,
     error,
