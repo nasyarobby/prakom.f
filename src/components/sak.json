@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "text": "Apakah Anda Mengalami",
+    "options": [
+      {
+        "id": 1,
+        "text": "Nyeri atau tekanan dada yang parah dan terus menerus",
+        "score": 25,
+        "group": 1
+      },
+      {
+        "id": 2,
+        "text": "Kesulitan bernapas",
+        "score": 25,
+        "group": 1
+      },
+      {
+        "id": 3,
+        "text": "Sakit kepala yang parah dan terus menerus.",
+        "score": 25,
+        "group": 1
+      },
+      {
+        "id": 4,
+        "text": "Disorientasi serius atau tidak responsif",
+        "score": 25,
+        "group": 1
+      },
+      {
+        "id": 5,
+        "text": "Tidak ada",
+        "group": 2
+      }
+    ],
+    "weight": 10
+  },
+  {
+    "id": 2,
+    "text": "Apakah dalam 14 hari Anda pernah",
+    "options": [
+      {
+        "id": 6,
+        "text": "Mengukur Suhu",
+        "group": 1
+      },
+      {
+        "id": 7,
+        "text": "Tidak pernah",
+        "group": 2,
+        "score": 100
+      }
+    ],
+    "weight": 5
+  },
+  {
+    "id": 3,
+    "text": "Apakah dalam 14 hari terakhir Anda mengalami",
+    "options": [
+      { "id": 8, "text": "Gejala Sesak Napas", "group": 1, "score": 100 },
+      { "id": 9, "text": "Tidak pernah", "group": 2 }
+    ],
+    "weight": 15
+  },
+  {
+    "id": 4,
+    "text": "Pilih kondisi kesehatan yang sedang Anda alami",
+    "options": [
+      { "id": 10, "text": "Batuk", "group": 1, "score": 10 },
+      { "id": 11, "text": "Pilek", "group": 1, "score": 10 },
+      { "id": 12, "text": "Nyeri Tenggorokan", "group": 1, "score": 10 },
+      { "id": 13, "text": "Sakit Kepala", "group": 1, "score": 5 },
+      { "id": 14, "text": "Mengigil", "group": 1, "score": 10 },
+      { "id": 15, "text": "Lemah atau lemas", "group": 1, "score": 10 },
+      { "id": 16, "text": "Nyeri Otot", "group": 1, "score": 5 },
+      { "id": 17, "text": "Mual atau muntah", "group": 1, "score": 5 },
+      { "id": 18, "text": "Nyeri Perut (abdomen)", "group": 1, "score": 5 },
+      { "id": 19, "text": "Diare", "group": 1, "score": 5 },
+      {
+        "id": 20,
+        "text": "Kemampuan Mencium Bau Berkurang",
+        "group": 1,
+        "score": 10
+      },
+      {
+        "id": 21,
+        "text": "Kemampuan Mengecap Rasa Berkurang",
+        "group": 1,
+        "score": 10
+      },
+      { "id": 22, "text": "Lainnya", "group": 1, "score": 5 },
+      { "id": 23, "text": "Tidak Semuanya", "group": 2 }
+    ],
+    "weight": 20
+  },
+  {
+    "id": 5,
+    "text": "Pilih gejala yang Anda alami dalam 14 hari terakhir",
+    "options": [
+      { "id": 24, "text": "Hamil", "group": 1, "score": 5 },
+      {
+        "id": 25,
+        "text": "Diabetes Melitus/Kencing Manis/Sakit Gula",
+        "group": 1,
+        "score": 10
+      },
+      {
+        "id": 26,
+        "text": "Penyakit Jantung",
+        "group": 1,
+        "score": 10
+      },
+      {
+        "id": 27,
+        "text": "Hipertensi/Tekanan Darah Tinggi",
+        "group": 1,
+        "score": 10
+      },
+      {
+        "id": 28,
+        "text": "Penyakit Kanker/Keganasan",
+        "group": 1,
+        "score": 10
+      },
+      { "id": 29, "text": "Gangguan Sistem Imun", "group": 1, "score": 10 },
+      { "id": 30, "text": "Gagal Ginjal Kronik", "group": 1, "score": 10 },
+      { "id": 31, "text": "Gangguan Hati", "group": 1, "score": 10 },
+      { "id": 32, "text": "Asma", "group": 1, "score": 10 },
+      { "id": 33, "text": "Alergi", "group": 1, "score": 5 },
+      { "id": 34, "text": "Tuberkulosis", "group": 1, "score": 10 },
+      { "id": 35, "text": "Tidak Semuanya", "group": 2 }
+    ],
+    "weight": 20
+  },
+  {
+    "id": 6,
+    "text": "Apakah dalam 14 hari Anda",
+    "options": [
+      {
+        "id": 36,
+        "text": "Pernah Berkontak dengan Pasien Positif atau Suspek Covid-19",
+        "group": 1,
+        "score": 100
+      },
+      {
+        "id": 37,
+        "text": "Tidak Pernah Berkontak dengan Pasien Positif atau Suspek Covid-19",
+        "group": 2
+      }
+    ],
+    "weight": 100
+  },
+  {
+    "id": 7,
+    "text": "Apakah dalam 14 hari Anda",
+    "options": [
+      {
+        "id": 38,
+        "text": "Pernah Berkontak dengan Pasien dalam Pengawasan (PDP)",
+        "group": 1,
+        "score": 100
+      },
+      {
+        "id": 39,
+        "text": "Tidak Pernah Berkontak dengan Pasien dalam Pengawasan (PDP)",
+        "group": 2
+      }
+    ],
+    "weight": 100
+  },
+  {
+    "id": 8,
+    "text": "Apakah dalam 14 hari Anda",
+    "options": [
+      {
+        "id": 40,
+        "text": "Saya Petugas Kesehatan/ Bekerja di Fasilitas Kesehatan yang Menangani Pasien",
+        "group": 1,
+        "score": 100
+      },
+      {
+        "id": 41,
+        "text": "Tidak Terlibat Menangani Pasien",
+        "group": 2
+      }
+    ],
+    "weight": 100
+  },
+  {
+    "id": 9,
+    "text": "Apakah dalam 14 hari Anda Bepergian ke:",
+    "options": [
+      {
+        "id": 42,
+        "text": "Amerika Serikat",
+        "group": 1,
+        "score": 10
+      },
+      { "id": 43, "text": "Jakarta", "group": 1, "score": 10 },
+      { "id": 44, "text": "Jawa Barat", "group": 1, "score": 10 },
+      { "id": 45, "text": "Jawa Timur", "group": 1, "score": 10 },
+      { "id": 46, "text": "Bali", "group": 1, "score": 10 },
+      { "id": 47, "text": "Italia", "group": 1, "score": 10 },
+      { "id": 48, "text": "Korea Selatan", "group": 1, "score": 10 },
+      { "id": 49, "text": "Singapura", "group": 1, "score": 10 },
+      { "id": 50, "text": "Tiongkok", "group": 1, "score": 10 },
+      { "id": 51, "text": "Lainnya", "group": 1, "score": 10 },
+      { "id": 52, "text": "Tidak bepergian", "group": 2, "score": 0 }
+    ],
+    "weight": 10
+  }
+]
