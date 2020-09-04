@@ -34,7 +34,9 @@ export default function StepPilihTanggal({
       </div>
     );
   }
-  const now = moment("2019-01-04 13:20:00");
+  const now = localStorage.getItem("custom-date")
+    ? moment(localStorage.getItem("custom-date"))
+    : moment();
 
   const _dummyData = {
     tanggal: (now = moment()) => {
