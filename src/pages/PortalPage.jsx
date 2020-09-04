@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 
 export default function Portalpage(props) {
-  const { user, isLoggedIn } = useContext(AppContext);
+  const { isLoggedIn } = useContext(AppContext);
 
   return (
     <div>
@@ -14,8 +14,12 @@ export default function Portalpage(props) {
         {[
           {
             label: "Antrian Online",
-            login: "http://localhost:8080?token=",
-            target: "http://localhost:8080/daftar-antrian",
+            login:
+              process.env.REACT_APP_SSO_REDIRECT ||
+              "http://localhost:8080?token=",
+            target:
+              process.env.REACT_APP_HOST ||
+              "http://localhost:8080/daftar-antrian",
           },
           { label: "e-Billing", login: "https://ebilling.pajak.go.id/?token=" },
           { label: "e-Filing", login: "https://efiling.pajak.go.id/?token=" },
@@ -28,7 +32,10 @@ export default function Portalpage(props) {
                 href={
                   isLoggedIn
                     ? x.target
-                    : `http://localhost:3000/?redirect_uri=${x.login}`
+                    : `${
+                        process.env.REACT_APP_SSO_HOST ||
+                        "http://localhost:3000/?redirect_uri="
+                      }${x.login}`
                 }
               >
                 <div className="rounded shadow p-10 py-5 border-l-8 border-orange-500 bg-blue-800 text-white text-xl uppercase cursor-pointer">
