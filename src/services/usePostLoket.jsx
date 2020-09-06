@@ -11,6 +11,12 @@ export default function usePostLoket() {
         nomorAntrian,
       });
     },
+    tempati: (kpp, loket) => {
+      return send(`/api/loket/${kpp}/${loket}/tempati`);
+    },
+    keluar: (kpp, loket) => {
+      return send(`/api/loket/${kpp}/${loket}/keluar`);
+    },
     mulai: (kpp, loket) => {
       return send(`/api/loket/${kpp}/${loket}/mulai`);
     },

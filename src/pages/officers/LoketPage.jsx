@@ -6,6 +6,7 @@ import {
   Route,
   useLocation,
   Redirect,
+  Link,
 } from "react-router-dom";
 import { useEffect } from "react";
 import useGetLoket from "./../../services/useGetLoket";
@@ -22,9 +23,67 @@ import usePostLoket from "../../services/usePostLoket";
 import Timer from "../../components/Timer";
 moment.locale("id");
 
-export default function LoketPage({ user }) {
+function Tab({ label, active, url }) {
+  if (active)
+    return (
+      <div className="p-2 rounded-t border-t border-l border-r">{label}</div>
+    );
+  else
+    return (
+      <Link
+        className="p-2 rounded-t border bg-gray-300 text-gray-600 underline"
+        to={url}
+      >
+        {label}
+      </Link>
+    );
+}
+
+function LoketTabs({ kpp, nomor }) {
+  const location = useLocation();
+
+  return (
+    <div className="flex">
+      {[
+        {
+          label: "Daftar Loker",
+          matcher: (location) => {
+            const path = location.pathname.split("/");
+            return path.length === 4;
+          },
+          url: () => {
+            return "/siap/loket" + (kpp ? "/" + kpp : "");
+          },
+        },
+        {
+          label: "Loket Aktif",
+          matcher: (location) => {
+            const path = location.pathname.split("/");
+            return path.length === 5;
+          },
+          url: () => {
+            return "/siap/loket/" + kpp + "/" + nomor;
+          },
+        },
+      ].map((menu) => {
+        return (
+          <Tab
+            label={menu.label}
+            active={menu.matcher(location)}
+            url={menu.url()}
+          />
+        );
+      })}
+
+      <div className="flex-grow border-b"></div>
+    </div>
+  );
+}
+
+export default function LoketPage({ user, setLoket, loket }) {
   const history = useHistory();
   const location = useLocation();
+
   useEffect(() => {
     if (location.pathname === "/siap/loket" && user.kppKode)
       history.push("/siap/loket/" + user.kppKode);
@@ -33,21 +92,15 @@ export default function LoketPage({ user }) {
   return (
     <>
       <div className="p-2">
-        <div className="flex">
-          <div className="p-2 rounded-t border-t border-l border-r">
-            Daftar Loket
-          </div>
-          <div className="p-2 rounded-t border">Loket Aktif</div>
-          <div className="flex-grow border-b"></div>
-        </div>
+        <LoketTabs kpp={user.kpp.kode} nomor={loket} />
       </div>
       <div>
         <Switch>
           <Route exact path="/siap/loket/:kpp">
-            <LoketMonitor user={user} />
+            <LoketMonitor user={user} setLoket={setLoket} nomorLoket={loket} />
           </Route>
           <Route exact path="/siap/loket/:kpp/:nomor">
-            <LoketApp user={user} />
+            <LoketAktifApp user={user} />
           </Route>
         </Switch>
       </div>
@@ -55,12 +108,55 @@ export default function LoketPage({ user }) {
   );
 }
 
-function LoketApp({ user }) {
+function LoketToolbar({ kpp, nomor }) {
+  const [showDialogKeluar, setShowDialogKeluar] = useState(false);
+  const { data: dataKeluar, keluar } = usePostLoket();
+
+  if (dataKeluar) {
+    window.location.reload();
+  }
+
+  return (
+    <>
+      <Dialog
+        body={`Apakah anda ingin keluar dari loket ${nomor} ?`}
+        title="konfirmasi"
+        leftBtnLabel="Keluar"
+        rightBtnLabel="Batal"
+        onClickRightBtn={(e) => setShowDialogKeluar(false)}
+        show={showDialogKeluar}
+        onClickLeftBtn={(e) => keluar(kpp, nomor)}
+      />
+      <div className="flex justify-between items-center content-center p-4 border-b border-gray-300">
+        <div className="font-semibold text-2xl">Loket {nomor}</div>
+        <button
+          className="p-2 bg-gray-200 rounded shadow"
+          onClick={(e) => setShowDialogKeluar(true)}
+        >
+          Tinggalkan Loket
+        </button>
+      </div>
+    </>
+  );
+}
+
+function LoketAktifApp({ user }) {
   const { data, getLoket } = useGetLoket();
   const { kpp, nomor } = useParams();
   useEffect(() => {
     getLoket(kpp, nomor);
   }, []);
+
+  if (nomor === "null") {
+    return (
+      <div>
+        <div className="bg-yellow-200 p-2 m-4  shadow">
+          Tidak ada loket aktif. Anda belum menempati loket manapun. Klik tab
+          Daftar Loket untuk memilih loket yang ingin ditempati.
+        </div>
+      </div>
+    );
+  }
 
   if (data && data.data && data.data.loket) {
     if (
@@ -69,18 +165,26 @@ function LoketApp({ user }) {
     ) {
       if (data.data.loket.antrian) {
         return (
-          <ProsesAntrian
-            kpp={kpp}
-            nomorLoket={nomor}
-            antrian={data.data.loket.antrian}
-          />
+          <>
+            <LoketToolbar kpp={kpp} nomor={nomor} />
+            <div className="p-4">
+              <ProsesAntrian
+                kpp={kpp}
+                nomorLoket={nomor}
+                antrian={data.data.loket.antrian}
+              />
+            </div>
+          </>
         );
       } else {
         return (
-          <div>
-            Pilih Nomor Antrian
-            <SelectAntrian kpp={kpp} nomor={nomor} />
-          </div>
+          <>
+            <LoketToolbar kpp={kpp} nomor={nomor} />
+            <div className="p-4">
+              <h1 className="font-semibold text-lg">Pilih Nomor Antrian</h1>
+              <SelectAntrian kpp={kpp} nomor={nomor} />
+            </div>
+          </>
         );
       }
     } else return <Redirect to={"/siap/loket/" + user.kppKode} />;
@@ -441,7 +545,7 @@ function SelectAntrian({ kpp, nomor }) {
   }
 }
 
-function LoketMonitor({ user }) {
+function LoketMonitor({ user, setLoket, nomorLoket }) {
   const { data, getLoket } = useGetLoket();
   const { kpp, loket } = useParams();
 
@@ -468,14 +572,33 @@ function LoketMonitor({ user }) {
           </div>
         )}
         {data.data.loket.map((loket) => {
-          return <Loket nomor={loket.nomor} pegawai={loket.pegawai} />;
+          return (
+            <Loket
+              kpp={kpp}
+              nomor={loket.nomor}
+              pegawai={loket.pegawai}
+              setLoket={setLoket}
+              canSelect={
+                data.data.loket.filter((loket) => loket.nip === user.nipPendek)
+                  .length === 0
+              }
+            />
+          );
         })}
       </div>
     );
   return <Skeleton count={5} />;
 }
 
-function Loket({ nomor, pegawai }) {
+function Loket({ kpp, nomor, pegawai, setLoket, canSelect }) {
+  const { data, tempati } = usePostLoket();
+  const history = useHistory();
+
+  if (data) {
+    setLoket(nomor);
+    history.push("/siap/loket/" + kpp + "/" + nomor);
+  }
+
   return (
     <div className="my-2 py-5 px-4 shadow-xl flex items-center">
       <div className="text-3xl rounded-full w-12 h-12 bg-blue-800 text-white text-center">
@@ -495,8 +618,20 @@ function Loket({ nomor, pegawai }) {
             <div>
               {pegawai.nama} / {pegawai.nipPanjang}
             </div>
+          ) : canSelect ? (
+            <button
+              className="rounded px-5 py-2 bg-orange-600 text-white"
+              onClick={(e) => {
+                tempati(kpp, nomor);
+              }}
+            >
+              Tempati Loket
+            </button>
           ) : (
-            <button className="rounded px-5 py-2 bg-orange-600 text-white">
+            <button
+              className="rounded px-5 py-2 bg-gray-400 text-gray-200 "
+              disabled
+            >
               Tempati Loket
             </button>
           )}

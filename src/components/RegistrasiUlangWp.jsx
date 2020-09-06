@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Input from "./Input";
-
+import { decode } from "jsonwebtoken";
 import moment from "moment";
 import "moment/locale/id";
 import useGetAntrian from "../services/useGetAntrian";
@@ -9,13 +9,33 @@ import Card from "./Card";
 import { useParams, Switch, Route, useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import useUpdateAntrian from "../services/useUpdateAntrian";
+import QrReader from "react-qr-reader";
 moment.locale("id");
 
 export default function Registrasiulangwp({ user }) {
   const [id, setId] = useState("");
   const [kode, setKode] = useState("");
+  const [qrData, setQrData] = useState("");
+  const [camera, setCamera] = useState("environment");
   const [readyToCheck, setReadyToCheck] = useState(true);
   const history = useHistory();
+  const toggleCamera = () => {
+    setCamera((cam) => (cam === "environment" ? "user" : "environment"));
+  };
+
+  const handleScan = (data) => {
+    if (data) {
+      const decoded = decode(data);
+      console.log(decoded);
+      setQrData(data);
+      setId(decoded.id);
+      setKode(decoded.kode);
+      history.push("/siap/registrasi-ulang/" + id + "/" + kode);
+    }
+  };
+  const handleError = (err) => {
+    console.error(err);
+  };
 
   const onChangeId = (e) => {
     setId(e.target.value.trim());
@@ -38,6 +58,16 @@ export default function Registrasiulangwp({ user }) {
   return (
     <div className="flex">
       <div className="w-1/3">
+        <QrReader
+          delay={100}
+          onError={handleError}
+          onScan={handleScan}
+          style={{ width: "100%" }}
+          facingMode={camera || "environment"}
+        />
+        <button onClick={() => toggleCamera()} className="p-2 w-full">
+          Ganti Kamera
+        </button>
         <Input
           type="number"
           label="Nomor antrian"
