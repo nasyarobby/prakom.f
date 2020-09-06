@@ -6,8 +6,16 @@ export default function useGetAntrian() {
     data,
     error,
     loading,
-    getAntrian: (token) => {
-      return send("/api/antrian?token=" + token);
+    getAntrian: (token, kode = null, kpp = null) => {
+      if (token && kode && kpp)
+        return send("/api/antrian", {
+          params: {
+            id: token,
+            kode,
+            kpp,
+          },
+        });
+      else return send("/api/antrian?token=" + token);
     },
     getAntrianUpcoming: () => {
       return send("/api/antrian/upcoming");

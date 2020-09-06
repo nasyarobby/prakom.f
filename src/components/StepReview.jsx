@@ -1,5 +1,6 @@
 import React from "react";
 import { formatNpwp } from "../libs/formatter";
+import Card from "./Card";
 
 export default function Stepreview({
   namaWp,
@@ -50,15 +51,6 @@ export default function Stepreview({
           Buat Jadwal Kunjungan
         </button>
       </div>
-    </div>
-  );
-}
-
-function Card({ label, value }) {
-  return (
-    <div className="my-2">
-      <div className="text-sm text-gray-600">{label}</div>
-      <div className="font-semibold text-gray-800">{value}</div>
     </div>
   );
 }

@@ -7,11 +7,16 @@ import Userprofile from "./components/UserProfile";
 import Antrianmainpage from "./pages/AntrianMainPage";
 import StepIsiBiodata from "./components/StepIsiBiodata";
 import AntrianDetail from "./components/AntrianDetail";
+import Login from "./components/Login";
+import Mainpage from "./pages/officers/MainPage";
 export const AppContext = createContext();
 
-function ProtectedPage(props) {
+function ProtectedPage({ admin = false, ...props }) {
   const { user, isLoggedIn } = useContext(AppContext);
-  if (isLoggedIn) {
+  if (
+    isLoggedIn &&
+    (admin ? ["admin", "admin_kpp", "pegawai"].includes(user.role) : true)
+  ) {
     return props.children;
   } else {
     return "Not authorized.";
@@ -29,10 +34,21 @@ function App() {
 
   return (
     <AppContext.Provider value={{ user, isLoggedIn }}>
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto px-4">
         <Switch>
           <Route exact path="/">
+            {["pegawai", "admin", "admin_kpp"].includes(user.role) && (
+              <Redirect to="/siap" />
+            )}
             <Portalpage />
+          </Route>
+          <Route path="/siap">
+            <ProtectedPage admin>
+              <Mainpage />
+            </ProtectedPage>
+          </Route>
+          <Route exact path="/login">
+            <Login />
           </Route>
           <div className="flex my-10">
             {isLoggedIn && (

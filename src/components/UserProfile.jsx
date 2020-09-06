@@ -1,14 +1,33 @@
 import React from "react";
 import { formatNpwp } from "../libs/formatter";
 
+function mapRole(role) {
+  if (role === "admin") {
+    return "Administrator";
+  } else if (role === "admin_kpp") return "Administrator Lokal";
+  else if (role === "pegawai") return "Pegawai";
+}
+
 export default function Userprofile({ user }) {
   return (
     <div>
       <h1 className="font-bold text-xl">{user.nama}</h1>
       <ul>
-        <li>
-          <span className="">{formatNpwp(user.npwp)}</span>
-        </li>
+        {user.npwp && (
+          <li>
+            <span className="">{formatNpwp(user.npwp)}</span>
+          </li>
+        )}
+        {["pegawai", "admin", "admin_kpp"].includes(user.role) && (
+          <li>
+            <span className="">{mapRole(user.role)}</span>
+          </li>
+        )}
+        {user.nipPanjang && (
+          <li>
+            <span className="">NIP.{user.nipPanjang}</span>
+          </li>
+        )}
         <li className="mt-4">
           <span className="mt-2">{user.alamat}</span>
         </li>

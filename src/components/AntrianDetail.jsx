@@ -8,10 +8,14 @@ import { useState } from "react";
 import moment from "moment";
 import "moment/locale/id";
 moment.locale("id");
-function pad(n, width, z) {
+
+export function pad(n, width, z) {
   z = z || "0";
   n = n + "";
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+export function formatAntrianNumber(id) {
+  return "2020" + pad(id, 7);
 }
 
 export default function AntrianDetail() {
@@ -48,7 +52,7 @@ export default function AntrianDetail() {
   return <KartuAntrian qr={jwt} loading />;
 }
 
-function KartuAntrian({
+export function KartuAntrian({
   loading = false,
   qr,
   nomor,
