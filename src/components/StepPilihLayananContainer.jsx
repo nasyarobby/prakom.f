@@ -12,6 +12,7 @@ export default function Steppilihlayanancontainer({
   setSelectedLayanan,
   selectedLayanan,
   onClickNextStep,
+  onClickPrevStep,
   setDetilLayanan,
   detilLayanan,
 }) {
@@ -41,6 +42,7 @@ export default function Steppilihlayanancontainer({
         selectedLayanan={selectedLayanan}
         daftarLayanan={layanan.data.layanan}
         onClickNextStep={onClickNextStep}
+        onClickPrevStep={onClickPrevStep}
         setDetilLayanan={setDetilLayanan}
         detilLayanan={detilLayanan}
       />
