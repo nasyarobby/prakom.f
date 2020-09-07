@@ -71,19 +71,29 @@ function Menu() {
         {[
           { label: "Registrasi Ulang", url: "/siap/registrasi-ulang" },
           { label: "Aplikasi Loket", url: "/siap/loket" },
-          { label: "Statistik" },
+          {
+            label: "Statistik",
+          },
         ].map((menu) => (
           <Menuitem menu={menu}>{menu.label}</Menuitem>
         ))}
       </div>
-      <div>Logout</div>
+      <div
+        className="cursor-pointer"
+        onClick={(e) => {
+          localStorage.removeItem("token");
+          window.location.replace("/");
+        }}
+      >
+        Logout
+      </div>
     </div>
   );
 }
 
 function Menuitem({ menu, children }) {
   return (
-    <Link className="mx-2" to={menu.url}>
+    <Link className="mx-2 " to={menu.url}>
       {children}
     </Link>
   );
