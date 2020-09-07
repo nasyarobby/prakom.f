@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { decode } from "jsonwebtoken";
 import QRCode from "qrcode.react";
 import Skeleton from "react-loading-skeleton";
@@ -32,21 +32,39 @@ export default function AntrianDetail() {
 
   if (dataGetAntrian) {
     return (
-      <KartuAntrian
-        qr={jwt}
-        nomor={"2020" + pad(id, 7)}
-        kode={kode}
-        npwp={npwp}
-        kodeKpp={kpp}
-        {...dataGetAntrian.data}
-        jadwal={
-          moment(dataGetAntrian.data.jadwalMulai).format(
-            "dddd, DD MMMM YYYY HH:mm"
-          ) +
-          " s.d. " +
-          moment(dataGetAntrian.data.jadwalSelesai).format("HH:mm")
-        }
-      />
+      <>
+        <KartuAntrian
+          qr={jwt}
+          nomor={"2020" + pad(id, 7)}
+          kode={kode}
+          npwp={npwp}
+          kodeKpp={kpp}
+          {...dataGetAntrian.data}
+          jadwal={
+            moment(dataGetAntrian.data.jadwalMulai).format(
+              "dddd, DD MMMM YYYY HH:mm"
+            ) +
+            " s.d. " +
+            moment(dataGetAntrian.data.jadwalSelesai).format("HH:mm")
+          }
+        />
+        <div className="mt-5">
+          <Link
+            to="/daftar-antrian"
+            className="p-2 mx-2 bg-orange-600 text-white rounded shadow"
+          >
+            Kembali
+          </Link>
+          <button
+            className="p-2 bg-orange-600 text-white rounded shadow"
+            onClick={(e) => {
+              if (window.print) window.print();
+            }}
+          >
+            Print
+          </button>
+        </div>
+      </>
     );
   }
   return <KartuAntrian qr={jwt} loading />;
