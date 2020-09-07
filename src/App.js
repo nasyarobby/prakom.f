@@ -53,13 +53,13 @@ function App() {
           <Route exact path="/login">
             <Login />
           </Route>
-          <div className="flex my-10">
+          <div className="md:flex my-10">
             {isLoggedIn && (
-              <div className="border rounded-lg p-4 shadow bg-blue-800 text-white w-1/3">
+              <div className="border rounded-lg p-4 shadow bg-blue-800 text-white w-full md:w-1/3">
                 <Userprofile user={user} />
               </div>
             )}
-            <div className="w-2/3 ml-4">
+            <div className="w-full mt-10 md:mt-0 md:w-2/3 md:ml-4">
               <Switch>
                 <Route exact path="/">
                   <Portalpage />
