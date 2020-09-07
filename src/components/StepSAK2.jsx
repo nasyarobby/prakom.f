@@ -66,11 +66,12 @@ export function SudahIsiSak({ onClickNextStep, onClickPrevStep, risiko }) {
       </div>
       {risiko !== "Rendah" && (
         <div>
-          Anda belum dapat melakukan kunjungan ke KPP. Silakan memeriksakan diri
-          ke fasilitas kesehatan terdekat dan mengutamakan kesehatan dengan gaya
-          hidup sehat, istirahat yang cukup, dan menjaga jarak dengan orang saat
-          berada di luar. Untuk layanan perpajakan, silakan gunakan Kring Pajak
-          1500200 atau layanan online di website www.pajak.go.id.
+          Anda belum dapat melakukan kunjungan ke KPP. Jika and merasa kurang
+          sehat, silakan memeriksakan diri ke fasilitas kesehatan terdekat dan
+          mengutamakan kesehatan dengan gaya hidup sehat, istirahat yang cukup,
+          dan menjaga jarak dengan orang saat berada di luar. Untuk layanan
+          perpajakan, silakan gunakan Kring Pajak 1500200 atau layanan online di
+          website www.pajak.go.id.
         </div>
       )}
 
