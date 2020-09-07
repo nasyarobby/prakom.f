@@ -66,9 +66,11 @@ export function SudahIsiSak({ onClickNextStep, onClickPrevStep, risiko }) {
       </div>
       {risiko !== "Rendah" && (
         <div>
-          Anda belum dapat melakukan kunjungan ke KPP. Silakan gunakan Kring
-          Pajak 1500200 atau layanan online di website www.pajak.go.id untuk
-          mendapatkan layanan perpajakan.
+          Anda belum dapat melakukan kunjungan ke KPP. Silakan memeriksakan diri
+          ke fasilitas kesehatan terdekat dan mengutamakan kesehatan dengan gaya
+          hidup sehat, istirahat yang cukup, dan menjaga jarak dengan orang saat
+          berada di luar. Untuk layanan perpajakan, silakan gunakan Kring Pajak
+          1500200 atau layanan online di website www.pajak.go.id.
         </div>
       )}
 
