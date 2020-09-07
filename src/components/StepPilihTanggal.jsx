@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import "moment/locale/id";
+import useGetAntrian from "../services/useGetAntrian";
+import Skeleton from "react-loading-skeleton";
 moment.locale("id");
 
 const OPENING_HOURS = 7;
@@ -8,6 +10,10 @@ const OPENING_MINUTES = 30;
 const CLOSING_HOURS = 17;
 const CLOSING_MINUTES = 0;
 const MINUTE_DURATION = 30;
+
+const MAX_SLOT = localStorage.getItem("slot")
+  ? Number(localStorage.getItem("slot"))
+  : 7;
 
 export default function StepPilihTanggal({
   onClickNextStep,
@@ -17,11 +23,18 @@ export default function StepPilihTanggal({
 }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [error, setError] = useState(false);
+  const { data, loading, getAntrianSlot } = useGetAntrian();
+
+  useEffect(() => {
+    if (selectedDate) {
+      getAntrianSlot("028", moment(selectedDate).format("YYYY-MM-DD"));
+    }
+  }, [selectedDate]);
 
   function Tanggal({ label, onClick, disabled, selected, error }) {
     return (
       <div
-        className={`p-2 border mb-2 ${
+        className={`p-2 border mb-2 text-center ${
           selected
             ? `bg-gray-800 text-white`
             : error
@@ -75,18 +88,35 @@ export default function StepPilihTanggal({
         hour: CLOSING_HOURS,
         minute: CLOSING_MINUTES,
       });
+      const BREAK_START = moment({
+        year: selectedDate && selectedDate.years,
+        month: selectedDate && selectedDate.months,
+        date: selectedDate && selectedDate.date,
+        hour: 11,
+        minute: 59,
+      });
+      const BREAK_FINISH = moment({
+        year: selectedDate && selectedDate.years,
+        month: selectedDate && selectedDate.months,
+        date: selectedDate && selectedDate.date,
+        hour: 13,
+        minute: 0,
+      });
+
       let currentTimeCursor = STARTING_TIME;
-      console.log(now.toObject());
       while (currentTimeCursor.isBefore(CLOSING_TIME)) {
         const endSessionTime = currentTimeCursor
           .clone()
           .add(MINUTE_DURATION, "minutes");
+
         returnedTimes.push({
           label:
             currentTimeCursor.format("HH:mm") +
             " s.d. " +
-            endSessionTime.format("HH:mm"),
-          selectable: currentTimeCursor.isAfter(now),
+            endSessionTime.format("HH:mm") +
+            (currentTimeCursor.hours() === 12 ? " (Istirahat)" : ""),
+          selectable:
+            currentTimeCursor.isAfter(now) && currentTimeCursor.hours() !== 12,
           start: currentTimeCursor.toObject(),
           end: endSessionTime.toObject(),
         });
@@ -129,33 +159,56 @@ export default function StepPilihTanggal({
             );
           })}
         </div>
-        <div className="w-3/5 pl-2 flex flex-wrap">
+        <div className="w-3/5 pl-2 ">
           {selectedDate &&
-            _dummyData.waktu(now).map((tanggal) => {
-              return (
-                <div className="ml-1" key={tanggal.label}>
-                  <Tanggal
-                    error={error}
-                    label={tanggal.label}
-                    selected={
-                      selectedVisitTime &&
-                      selectedVisitTime.start &&
-                      selectedVisitTime.start.years === tanggal.start.years &&
-                      selectedVisitTime.start.months === tanggal.start.months &&
-                      selectedVisitTime.start.date === tanggal.start.date &&
-                      selectedVisitTime.start.hours === tanggal.start.hours &&
-                      selectedVisitTime.start.minutes === tanggal.start.minutes
-                    }
-                    disabled={!tanggal.selectable}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setSelectedVisitTime(tanggal);
-                    }}
-                  />
-                </div>
-              );
-            })}
-          {}
+            (loading ? (
+              <Skeleton count={10} height={50} />
+            ) : data ? (
+              _dummyData.waktu(now).map((tanggal) => {
+                const slot = data.data.slot.find(
+                  (e) =>
+                    moment(e.jadwalMulai).unix() ===
+                    moment(tanggal.start).unix()
+                );
+                let sisa = MAX_SLOT;
+                if (slot) {
+                  sisa = MAX_SLOT - slot.jumlah;
+                }
+                return (
+                  <div className="ml-1" key={tanggal.label}>
+                    <Tanggal
+                      error={error}
+                      label={
+                        tanggal.label +
+                        (tanggal.selectable
+                          ? sisa === 0
+                            ? " (Penuh)"
+                            : " (" + sisa + ")"
+                          : "")
+                      }
+                      selected={
+                        selectedVisitTime &&
+                        selectedVisitTime.start &&
+                        selectedVisitTime.start.years === tanggal.start.years &&
+                        selectedVisitTime.start.months ===
+                          tanggal.start.months &&
+                        selectedVisitTime.start.date === tanggal.start.date &&
+                        selectedVisitTime.start.hours === tanggal.start.hours &&
+                        selectedVisitTime.start.minutes ===
+                          tanggal.start.minutes
+                      }
+                      disabled={!tanggal.selectable || sisa === 0}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setSelectedVisitTime(tanggal);
+                      }}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              ""
+            ))}
         </div>
       </div>
       <div className="mt-10">
