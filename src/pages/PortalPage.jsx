@@ -7,10 +7,10 @@ export default function Portalpage(props) {
 
   return (
     <div>
-      <div className="text-2xl rounded-full bg-blue-800 w-full text-white p-5 px-10">
+      <div className="text-lg rounded-b-lg bg-blue-800 w-full text-white px-10 p-2">
         Portal DJP Online
       </div>
-      <div className="flex p-5 flex-wrap">
+      <div className="md:flex p-5 flex-wrap">
         {[
           {
             label: "Antrian Online",
@@ -27,7 +27,7 @@ export default function Portalpage(props) {
           { label: "Pajak.go.id", login: "https://www.pajak.go.id" },
         ].map((x) => {
           return (
-            <div className="p-2 w-1/3">
+            <div className="p-2 w-full md:w-1/3">
               <a
                 href={
                   isLoggedIn
