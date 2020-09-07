@@ -36,6 +36,9 @@ function App() {
     <AppContext.Provider value={{ user, isLoggedIn }}>
       <div className="container mx-auto px-4">
         <Switch>
+          <Route exact path="/v">
+            V.1.1
+          </Route>
           <Route exact path="/">
             {["pegawai", "admin", "admin_kpp"].includes(user.role) && (
               <Redirect to="/siap" />
