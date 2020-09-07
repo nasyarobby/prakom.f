@@ -72,8 +72,12 @@ export default function StepSAK({
   }
   return (
     <>
-      <div>Score: {score > 10000 ? 100 : score / 100}%</div>
-      <div>{risk}</div>
+      {localStorage.getItem("debug") && (
+        <>
+          <div>Score: {score > 10000 ? 100 : score / 100}%</div>
+          <div>{risk}</div>
+        </>
+      )}
       {state
         .filter((q) => q.id === currentQuestion)
         .map((q) => {
