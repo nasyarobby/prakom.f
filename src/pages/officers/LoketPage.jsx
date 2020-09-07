@@ -128,7 +128,14 @@ function LoketToolbar({ kpp, nomor }) {
         onClickLeftBtn={(e) => keluar(kpp, nomor)}
       />
       <div className="flex justify-between items-center content-center p-4 border-b border-gray-300">
-        <div className="font-semibold text-2xl">Loket {nomor}</div>
+        <div
+          className="font-semibold text-2xl cursor-pointer"
+          onClick={(e) => {
+            window.open("/monitor/" + kpp + "/" + nomor);
+          }}
+        >
+          Loket {nomor}
+        </div>
         <button
           className="p-2 bg-gray-200 rounded shadow"
           onClick={(e) => setShowDialogKeluar(true)}
