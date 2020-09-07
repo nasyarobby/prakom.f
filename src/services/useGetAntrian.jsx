@@ -23,5 +23,13 @@ export default function useGetAntrian() {
     getAntrianPast: () => {
       return send("/api/antrian/past");
     },
+    getAntrianSlot: (kpp, tanggal) => {
+      return send("/api/antrian/slot", {
+        params: {
+          tanggal,
+          kpp,
+        },
+      });
+    },
   };
 }
