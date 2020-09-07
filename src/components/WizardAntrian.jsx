@@ -12,6 +12,7 @@ import useCreateAntrian from "../services/useCreateAntrian";
 import Loading from "./Loading";
 import Overlayloading from "./OverlayLoading";
 import { Redirect } from "react-router-dom";
+import Steppilihkpp from "./StepPilihKpp";
 moment.locale("id");
 
 export default function WizardAntrian() {
@@ -44,7 +45,7 @@ export default function WizardAntrian() {
   return (
     <>
       {step === 0 && (
-        <Steppilihlayanancontainer
+        <Steppilihkpp
           setSelectedLayanan={setSelectedLayanan}
           selectedLayanan={selectedLayanan}
           onClickNextStep={() => setStep(1)}
@@ -56,18 +57,31 @@ export default function WizardAntrian() {
         />
       )}
       {step === 1 && (
-        <StepIsiBiodata
+        <Steppilihlayanancontainer
+          setSelectedLayanan={setSelectedLayanan}
+          selectedLayanan={selectedLayanan}
           onClickNextStep={() => setStep(2)}
           onClickPrevStep={() => setStep(0)}
+          setDetilLayanan={setDetilLayanan}
+          detilLayanan={detilLayanan}
+          kpp={kpp}
+          setKpp={setKpp}
+          kodeKpp={user.kodeKppAdm}
+        />
+      )}
+      {step === 2 && (
+        <StepIsiBiodata
+          onClickNextStep={() => setStep(3)}
+          onClickPrevStep={() => setStep(1)}
           pengunjung={pengunjung}
           setPengunjung={setPengunjung}
         />
       )}
 
-      {step === 2 && (
+      {step === 3 && (
         <StepSAK
-          onClickNextStep={() => setStep(3)}
-          onClickPrevStep={() => setStep(1)}
+          onClickNextStep={() => setStep(4)}
+          onClickPrevStep={() => setStep(2)}
           setDataSak={(risk, data) => {
             setDataSak({ risk, data });
           }}
@@ -76,15 +90,15 @@ export default function WizardAntrian() {
           onFillingDone={(risk, data) => setDataSak({ risk, data })}
         />
       )}
-      {step === 3 && (
+      {step === 4 && (
         <StepPilihTanggal
           setSelectedVisitTime={setSelectedVisitTime}
           selectedVisitTime={selectedVisitTime}
-          onClickNextStep={() => setStep(4)}
-          onClickPrevStep={() => setStep(2)}
+          onClickNextStep={() => setStep(5)}
+          onClickPrevStep={() => setStep(3)}
         />
       )}
-      {step === 4 && (
+      {step === 5 && (
         <Stepreview
           onClickNextStep={() => {
             post(
@@ -101,7 +115,7 @@ export default function WizardAntrian() {
               detilLayanan
             );
           }}
-          onClickPrevStep={() => setStep(3)}
+          onClickPrevStep={() => setStep(4)}
           pengunjung={pengunjung}
           layanan={selectedLayanan.label}
           detilLayanan={detilLayanan}
