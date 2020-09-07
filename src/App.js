@@ -12,7 +12,7 @@ import Mainpage from "./pages/officers/MainPage";
 import Monitor from "./pages/officers/Monitor";
 export const AppContext = createContext();
 
-const APP_VERSION = "V1.3";
+const APP_VERSION = "V1.4";
 
 function ProtectedPage({ admin = false, ...props }) {
   const { user, isLoggedIn } = useContext(AppContext);
