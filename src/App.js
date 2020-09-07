@@ -11,6 +11,8 @@ import Login from "./components/Login";
 import Mainpage from "./pages/officers/MainPage";
 export const AppContext = createContext();
 
+const APP_VERSION = "V1.2";
+
 function ProtectedPage({ admin = false, ...props }) {
   const { user, isLoggedIn } = useContext(AppContext);
   if (
@@ -37,7 +39,7 @@ function App() {
       <div className="container mx-auto px-4">
         <Switch>
           <Route exact path="/v">
-            V.1.1
+            {APP_VERSION}
           </Route>
           <Route exact path="/">
             {["pegawai", "admin", "admin_kpp"].includes(user.role) && (
