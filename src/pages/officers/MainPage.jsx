@@ -7,6 +7,7 @@ import LoketPage from "./LoketPage";
 import useGetPegawai from "../../services/useGetPegawai";
 import { useState } from "react";
 import Loading from "../../components/Loading";
+import Statisticpage from "./StatisticPage";
 
 export default function Mainpage() {
   const { user } = useContext(AppContext);
@@ -31,6 +32,12 @@ export default function Mainpage() {
         <Switch>
           <Route exact path="/siap">
             <Redirect to="/siap/loket" />
+          </Route>
+          <Route exact path="/siap/statistik">
+            <Statisticpage />
+          </Route>
+          <Route exact path="/siap/statistik/:kpp">
+            <Statisticpage />
           </Route>
           <Route path="/siap/registrasi-ulang">
             <div className="p-2">
@@ -73,6 +80,7 @@ function Menu() {
           { label: "Aplikasi Loket", url: "/siap/loket" },
           {
             label: "Statistik",
+            url: "/siap/statistik",
           },
         ].map((menu) => (
           <Menuitem menu={menu}>{menu.label}</Menuitem>

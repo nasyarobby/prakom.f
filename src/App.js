@@ -9,6 +9,7 @@ import StepIsiBiodata from "./components/StepIsiBiodata";
 import AntrianDetail from "./components/AntrianDetail";
 import Login from "./components/Login";
 import Mainpage from "./pages/officers/MainPage";
+import Monitor from "./pages/officers/Monitor";
 export const AppContext = createContext();
 
 const APP_VERSION = "V1.2";
@@ -40,6 +41,9 @@ function App() {
         <Switch>
           <Route exact path="/v">
             {APP_VERSION}
+          </Route>
+          <Route exact path="/monitor/:kpp/:nomorloket">
+            <Monitor />
           </Route>
           <Route exact path="/">
             {["pegawai", "admin", "admin_kpp"].includes(user.role) && (
