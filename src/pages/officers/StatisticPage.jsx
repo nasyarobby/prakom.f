@@ -16,11 +16,11 @@ import useKppService from "../../services/useKppService";
 import { useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
 
-export default function Statisticpage() {
+export default function Statisticpage({ user }) {
   const { kpp } = useParams();
   const { data, getKpp } = useKppService();
 
-  if (!kpp) window.location.pathname = "/siap/statistik/021";
+  if (!kpp) window.location.pathname = "/siap/statistik/" + user.kppKode;
 
   useEffect(() => {
     if (kpp) {

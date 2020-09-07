@@ -27,17 +27,17 @@ export default function Mainpage() {
   if (data)
     return (
       <>
-        <Menu />
+        <Menu user={user} />
         <ProfilePegawai user={data.data} />
         <Switch>
           <Route exact path="/siap">
             <Redirect to="/siap/loket" />
           </Route>
           <Route exact path="/siap/statistik">
-            <Statisticpage />
+            <Statisticpage user={user} />
           </Route>
           <Route exact path="/siap/statistik/:kpp">
-            <Statisticpage />
+            <Statisticpage user={user} />
           </Route>
           <Route path="/siap/registrasi-ulang">
             <div className="p-2">
@@ -70,7 +70,7 @@ function ProfilePegawai({ user }) {
   );
 }
 
-function Menu() {
+function Menu({ user }) {
   return (
     <div className="flex flex-row py-2 px-4 bg-blue-800 text-white rounded-b-lg items-center justify-between">
       <div className="flex flex-row items-center">
@@ -81,9 +81,12 @@ function Menu() {
           {
             label: "Statistik",
             url: "/siap/statistik",
+            onlyFor: ["admin", "admin_kpp"],
           },
         ].map((menu) => (
-          <Menuitem menu={menu}>{menu.label}</Menuitem>
+          <Menuitem user={user} menu={menu}>
+            {menu.label}
+          </Menuitem>
         ))}
       </div>
       <div
@@ -99,10 +102,12 @@ function Menu() {
   );
 }
 
-function Menuitem({ menu, children }) {
-  return (
-    <Link className="mx-2 " to={menu.url}>
-      {children}
-    </Link>
-  );
+function Menuitem({ menu, children, user }) {
+  if (menu.onlyFor ? menu.onlyFor.includes(user.role) : true)
+    return (
+      <Link className="mx-2 " to={menu.url}>
+        {children}
+      </Link>
+    );
+  else return null;
 }
