@@ -20,6 +20,7 @@ export default function StepPilihLayanan({
   setSelectedLayanan,
   daftarLayanan,
   onClickNextStep,
+  onClickPrevStep,
   detilLayanan,
   setDetilLayanan,
   kpp,
@@ -92,6 +93,16 @@ export default function StepPilihLayanan({
               }}
             />
           ))}
+          <button
+            className="py-2 px-4 rounded border border-gray-400"
+            onClick={(e) => {
+              e.preventDefault();
+              setSelectedLayanan(null);
+              onClickPrevStep();
+            }}
+          >
+            Sebelumnya: Pilih KPP
+          </button>
         </>
       )}
     </div>
