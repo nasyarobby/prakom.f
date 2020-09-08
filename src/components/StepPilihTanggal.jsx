@@ -197,7 +197,7 @@ export default function StepPilihTanggal({
                         selectedVisitTime.start.minutes ===
                           tanggal.start.minutes
                       }
-                      disabled={!tanggal.selectable || sisa === 0}
+                      disabled={!tanggal.selectable || sisa <= 0}
                       onClick={(e) => {
                         e.preventDefault();
                         setSelectedVisitTime(tanggal);
