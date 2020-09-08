@@ -3,12 +3,23 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 
 export default function Portalpage(props) {
-  const { isLoggedIn } = useContext(AppContext);
+  const { user, isLoggedIn } = useContext(AppContext);
 
   return (
     <div>
-      <div className="text-lg rounded-b-lg bg-blue-800 w-full text-white px-10 p-2">
-        Portal DJP Online
+      <div className="text-lg rounded-b-lg bg-blue-800 w-full text-white px-10 p-2 flex justify-between">
+        <div>Portal DJP Online</div>
+        <div className={`flex ${!isLoggedIn && `invisible`}`}>
+          <div className="mx-2">{user.nama}</div>
+          <div
+            className="mx-2 cursor-pointer"
+            onClick={(e) => {
+              localStorage.removeItem("token");
+            }}
+          >
+            Logout
+          </div>
+        </div>
       </div>
       <div className="md:flex p-5 flex-wrap">
         {[

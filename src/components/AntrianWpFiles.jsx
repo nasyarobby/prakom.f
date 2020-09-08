@@ -60,7 +60,11 @@ function UpcomingTab() {
   if (data) {
     return data.data.map((janji) => {
       return (
-        <div className="border border-gray-500 border-l-4 p-2 my-2">
+        <div
+          className={`border-l-8 p-2 my-2 ${
+            janji.realSelesai ? ` border-green-700 ` : ` border-gray `
+          }`}
+        >
           <div className="text-lg font-semibold">
             {moment(janji.jadwalMulai).format("dddd, DD MMMM YYYY")}
           </div>
@@ -69,6 +73,9 @@ function UpcomingTab() {
               " s.d. " +
               moment(janji.jadwalSelesai).format("HH:mm")}
           </div>
+          {janji.realSelesai && (
+            <div className="text-lg font-semibold">(Telah Selesai)</div>
+          )}
           <div>
             KPP {janji.kpp.nama} / {janji.kpp.kode}
           </div>
@@ -105,7 +112,11 @@ function HistoryTab() {
   if (data) {
     return data.data.map((janji) => {
       return (
-        <div className="border border-gray-500 border-l-4 p-2 my-2">
+        <div
+          className={`border-l-8 p-2 my-2 ${
+            janji.realSelesai ? ` border-green-700 ` : ` border-gray `
+          }`}
+        >
           <div className="text-lg font-semibold">
             {moment(janji.jadwalMulai).format("dddd, DD MMMM YYYY")}
           </div>
@@ -114,6 +125,9 @@ function HistoryTab() {
               " s.d. " +
               moment(janji.jadwalSelesai).format("HH:mm")}
           </div>
+          {janji.realSelesai && (
+            <div className="text-lg font-semibold">(Telah Selesai)</div>
+          )}
           <div>
             KPP {janji.kpp.nama} / {janji.kpp.kode}
           </div>

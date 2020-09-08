@@ -9,6 +9,13 @@ import { useState } from "react";
 import Loading from "../../components/Loading";
 import Statisticpage from "./StatisticPage";
 
+function mapRole(role) {
+  if (role === "admin") {
+    return "Administrator";
+  } else if (role === "admin_kpp") return "Administrator Lokal";
+  else if (role === "pegawai") return "Pegawai";
+}
+
 export default function Mainpage() {
   const { user } = useContext(AppContext);
   const { data, getByNip } = useGetPegawai();
@@ -65,7 +72,8 @@ export default function Mainpage() {
 function ProfilePegawai({ user }) {
   return (
     <div className="p-2 bg-gray-200 my-2">
-      {user.nama} / {user.nipPanjang} - KPP {user.kpp.nama} ({user.kppKode})
+      {user.nama} / {user.nipPanjang} ({mapRole(user.role)}) - KPP{" "}
+      {user.kpp.nama} ({user.kppKode})
     </div>
   );
 }
