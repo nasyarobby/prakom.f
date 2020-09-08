@@ -181,7 +181,7 @@ export default function StepPilihTanggal({
                       label={
                         tanggal.label +
                         (tanggal.selectable
-                          ? sisa === 0
+                          ? sisa <= 0
                             ? " (Penuh)"
                             : " (" + sisa + ")"
                           : "")
